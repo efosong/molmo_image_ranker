@@ -1,0 +1,7 @@
+transformers
+accelerate
+pillow
+pandas
+torch
+einops
+numpy<2.0.0
