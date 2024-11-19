@@ -21,8 +21,8 @@ md"""
 # ╔═╡ 49fa4501-1049-490f-a99f-1baf075e02db
 begin
 	BASE_DIR = "."
-	PROMPT = "data_lr_bfloat16"
-	T = 1/√2
+	PROMPT = "data_lr_art-judge_bfloat16"
+	T = 1
 	df = CSV.read("$BASE_DIR/pairwise_ratings/$PROMPT.csv", DataFrame)
 	transform!(df, AsTable(:) => ByRow(r -> ((r.L - r.iL)-(r.R-r.iR))/2T) => :logdiff)
 	transform!(df, :logdiff => ByRow(exp) => :ratio,
@@ -37,7 +37,7 @@ md"""
 
 # ╔═╡ 4ce301d0-1f87-40e7-a1af-22c6f93e6d5b
 begin
-	THRESH = 0.10
+	THRESH = 0.00
 	g = SimpleDiGraphFromIterator([
 		(r.logdiff > 0) ? Edge(r.img_a, r.img_b) : Edge(r.img_b, r.img_a)
 		for r in eachrow(df)
@@ -624,7 +624,7 @@ version = "5.11.0+0"
 # ╟─f967e7bb-9a66-4224-a6f3-0fd920887172
 # ╟─29e6a47e-901c-4c43-901e-d79660927207
 # ╟─6aad73cf-f042-4e2b-9963-bce4554984e9
-# ╟─4ce301d0-1f87-40e7-a1af-22c6f93e6d5b
+# ╠═4ce301d0-1f87-40e7-a1af-22c6f93e6d5b
 # ╟─fd51b385-7968-41d0-bca7-523391d7855e
 # ╟─25faee5b-ed27-4451-bcd5-19cd53d42aa5
 # ╠═b9a11411-ef00-4fc6-96e2-1db3e4c7f912
